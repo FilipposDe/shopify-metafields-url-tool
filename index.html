@@ -73,7 +73,7 @@
                     value=""
                     required
                   />
-                  <small class="form-text ">Type in the field name(s) you want to edit and hit 'Enter'</small>
+                  <small class="form-text ">Type the field name, hit 'Enter', repeat</small>
                 </div>
             <div class="alert alert-primary d-none" role="alert" id="result-container">
                 Your URL is:<p id="result" class="mt-2"></p><button class="alert-link mr-2 btn btn-link text-white" onclick="clipboard(event)" id="copy">Copy</button> <a class="alert-link btn btn-link text-white" href="#" target="_blank" id="result-link">Visit</a>
@@ -127,9 +127,7 @@
             const url = e.target.dataset.url;
             navigator.clipboard.writeText( url ).then( function () {
                 console.log( 'Async: Copying to clipboard was successful!' );
-            }, function ( err ) {
-                alert("Sorry, there was an error")
-            } );
+            });
         }
     </script>
   </body>

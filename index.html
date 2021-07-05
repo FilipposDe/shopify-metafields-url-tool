@@ -76,7 +76,7 @@
                   <small class="form-text ">Type the field name, hit 'Enter', repeat</small>
                 </div>
             <div class="alert alert-primary d-none" role="alert" id="result-container">
-                Your URL is:<p id="result" class="mt-2"></p><button class="alert-link mr-2 btn btn-link text-white" onclick="clipboard(event)" id="copy">Copy</button> <a class="alert-link btn btn-link text-white" href="#" target="_blank" id="result-link">Visit</a>
+                Your URL is:<p id="result" class="mt-2"></p><button class="alert-link mr-2 btn btn-link text-white" onclick="clipboardCopy(event)" id="copy">Copy</button> <a class="alert-link btn btn-link text-white" href="#" target="_blank" id="result-link">Visit</a>
             </div>
                 <button type="submit" class="btn btn-primary" onclick="getURL(event)">Get URL</button>
               </form>
@@ -122,7 +122,7 @@
 
         }
 
-        function clipboard(e) {
+        function clipboardCopy(e) {
             e.preventDefault()
             const url = e.target.dataset.url;
             navigator.clipboard.writeText( url ).then( function () {

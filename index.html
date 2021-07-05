@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shopify Metafields URL</title>
+<!-- <link rel="stylesheet" href="assets/bootstrap.min.css"> -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <style>
+      html,
+      body {
+        height: 100%;
+      }
+
+      .bootstrap-tagsinput .badge {
+          font-size: 16px;
+            margin: 5px !important;
+            font-weight: 400;
+            background-color: #0050a7;
+      }
+
+      .bootstrap-tagsinput {
+          min-height: 46px;
+      }
+      .bootstrap-tagsinput>input {
+          margin: 5px !important;
+      }
+    </style>
+    <link href="assets/tagsinput.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div class="container h-100">
+      <div class="row justify-content-center align-items-center h-100">
+        <div class="col-lg-6 col-12">
+          <div class="card">
+            <h5 class="card-header">Bulk Edit Product Metafields</h5>
+            <div class="card-body">
+              <form>
+                <div class="mb-3">
+                  <label for="shop" class="form-label"
+                    >Shopify store address</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="shop"
+                    placeholder="*.myshopify.com"
+                    required
+                  />
+                <small class="form-text text-muted">Format: example.myshopify.com</small>
+
+                </div>
+                <div class="mb-3">
+                  <label for="tags-input" class="form-label"
+                    >Metafield names</label
+                  >
+                  <input
+                   data-role="tagsinput"
+                    type="text"
+                    class="form-control"
+                    id="tags-input"
+                    value=""
+                    required
+                  />
+                  <small class="form-text text-muted">Type in the field name(s) you want to edit and hit 'Enter'</small>
+                </div>
+            <div class="alert alert-primary d-none" role="alert" id="result-container">
+                Your URL is:<p id="result" class="mt-2"></p><button class="alert-link mr-2 btn btn-link" onclick="clipboard(event)" >Copy</button> <a class="alert-link btn btn-link" href="#" target="_blank" id="result-link">Visit</a>
+            </div>
+                <button type="submit" class="btn btn-primary" onclick="getURL(event)">Get URL</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
+    <script src="assets/tagsinput.js"></script>
+    <script>
+        function getURL(e) {
+            e.preventDefault()
+            const form = document.querySelector("form")
+            if( !form.checkValidity()) {
+                form.reportValidity();
+                return
+            } 
+            
+
+            const shop = document.querySelector("#shop").value
+            const tags = document.querySelector("#tags-input").value
+
+            const tagsArray = tags.split(",")
+            let fields = ''
+            for (let i = 0; i < tagsArray.length; i++) {
+                const tag = tagsArray[i]
+                fields += "metafields.global." + tag.trim() + ","
+            }
+            fields = fields.substring(0, fields.length - 1)
+            let result = `https://${shop}/admin/bulk?resource_name=Product&edit=${fields}`
+
+            document.querySelector( "#result-container" ).classList.remove("d-none")
+            document.querySelector( "#result" ).innerHTML = result
+            document.querySelector( "#result-link" ).href = result
+
+        }
+
+        function clipboard(e) {
+            e.preventDefault()
+            console.log("jjj")
+        }
+    </script>
+  </body>
+</html>
